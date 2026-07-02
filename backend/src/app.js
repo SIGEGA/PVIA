@@ -28,14 +28,35 @@ app.use(
 // Seguridad y utilidades HTTP (después de /api-docs para que helmet no bloquee sus assets)
 const helmet = require('helmet');
 app.use(helmet({ contentSecurityPolicy: false }));
-app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:5173' }));
+// CORS: acepta el frontend configurado en env; en Railway ambas variables
+// (FRONTEND_URL y RAILWAY_PUBLIC_DOMAIN) deben apuntar al dominio del frontend.
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'http://localhost:5173',
+  'http://localhost:4173',
+].filter(Boolean);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Permite solicitudes sin origin (Postman, curl, swagger-ui server-side)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    callback(new Error(`Origen no permitido por CORS: ${origin}`));
+  },
+  credentials: true,
+}));
 app.use(morgan('dev'));
 app.use(express.json());
 
 // Todas las rutas de la API bajo /api
 app.use('/api', routes);
 
-// Health check — no requiere autenticación
+// Raíz — redirige a la documentación interactiva
+app.get('/', (req, res) => {
+  res.redirect(301, '/api-docs');
+});
+
+// Health check — usado por Railway y otros orquestadores para verificar que el servicio vive
 app.get('/health', (req, res) => {
   res.json({ success: true, data: { status: 'ok', timestamp: new Date() } });
 });
