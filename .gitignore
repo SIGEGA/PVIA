@@ -1,27 +1,177 @@
-# Dependencias
-node_modules/
+# =============================================================================
+# .gitignore — Proyecto ITH-POS (monorepo Node.js + React/Vite)
+# =============================================================================
+# Regla general: si el archivo puede generarse a partir del código o requiere
+# datos privados de cada entorno, NO debe estar en el repositorio.
+# =============================================================================
 
-# Variables de entorno con credenciales reales
+
+# ─────────────────────────────────────────────────────────────────────────────
+# DEPENDENCIAS
+# Se regeneran con `npm install`. Subirlas dispara conflictos y ocupa cientos
+# de MB innecesarios en el repositorio.
+# ─────────────────────────────────────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# VARIABLES DE ENTORNO Y SECRETOS
+# Los archivos .env contienen credenciales (BD, APIs, JWT secrets).
+# Solo se permite subir los archivos .example que muestran la estructura
+# sin valores reales.
+# ─────────────────────────────────────────────────────────────────────────────
 .env
 .env.local
 .env.development
+.env.development.local
+.env.test
+.env.test.local
 .env.production
+.env.production.local
+.env.staging
 
-# Builds
+# Asegura que los archivos de ejemplo SÍ se suban (anulan las reglas de arriba)
+!.env.example
+!.env.example.*
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# BUILDS Y ARCHIVOS GENERADOS
+# Se producen al ejecutar `npm run build`. No tiene sentido versionar el
+# resultado compilado cuando el código fuente ya está en el repositorio.
+# ─────────────────────────────────────────────────────────────────────────────
 dist/
 dist-ssr/
 build/
+out/
+.output/
+.next/
+.nuxt/
+.svelte-kit/
 
-# Logs
+
+# ─────────────────────────────────────────────────────────────────────────────
+# CACHÉ Y ARCHIVOS TEMPORALES
+# Generados por herramientas de build/bundling para acelerar re-compilaciones.
+# Son específicos de cada máquina y no deben compartirse.
+# ─────────────────────────────────────────────────────────────────────────────
+.cache/
+.parcel-cache/
+.vite/
+.turbo/
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PRUEBAS — COBERTURA
+# Los reportes de cobertura se generan con `npm test -- --coverage`.
+# Son archivos derivados, no código fuente.
+# ─────────────────────────────────────────────────────────────────────────────
+coverage/
+.nyc_output/
+lcov.info
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# LOGS
+# Los archivos de log registran ejecuciones concretas del servidor/cliente.
+# Son específicos de cada instalación y pueden crecer mucho.
+# ─────────────────────────────────────────────────────────────────────────────
+logs/
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Sistema operativo
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SISTEMA OPERATIVO
+# Archivos ocultos que Windows, macOS y Linux crean automáticamente.
+# No aportan nada al proyecto y difieren entre sistemas.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# macOS
 .DS_Store
-Thumbs.db
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
 
-# Editor
-.vscode/
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# EDITORES E IDEs
+# Configuraciones locales del editor que son personales de cada desarrollador.
+# Excepción: se permite subir extensiones recomendadas del equipo (.vscode/extensions.json).
+# ─────────────────────────────────────────────────────────────────────────────
+
+# VS Code — configuración personal (pero SÍ se permiten extensiones sugeridas)
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+
+# JetBrains (WebStorm, IntelliJ, etc.)
 .idea/
+*.iml
+*.ipr
+*.iws
+
+# Visual Studio
 *.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Vim / Neovim
+*.swp
+*.swo
 *.sw?
+Session.vim
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+.#*
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# HERRAMIENTAS DE DESARROLLO OPCIONALES
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Storybook
+storybook-static/
+
+# Playwright / Cypress — resultados de pruebas E2E
+test-results/
+playwright-report/
+cypress/videos/
+cypress/screenshots/
+
+# Docker — overrides locales
+docker-compose.override.yml

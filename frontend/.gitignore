@@ -1,11 +1,55 @@
-# Variables de entorno — NUNCA subir credenciales reales
-.env
-.env.local
-.env.development
-.env.production
+# =============================================================================
+# .gitignore — Frontend React / Vite
+# Las reglas globales del .gitignore raíz ya cubren node_modules, .env,
+# logs y archivos de SO. Este archivo añade patrones específicos del frontend.
+# =============================================================================
 
-# Logs
-logs
+
+# ─────────────────────────────────────────────────────────────────────────────
+# DEPENDENCIAS (refuerzo local)
+# ─────────────────────────────────────────────────────────────────────────────
+node_modules/
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# VARIABLES DE ENTORNO
+# VITE_API_URL y otras variables de entorno del frontend.
+# Solo se versiona .env.example.
+# ─────────────────────────────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# BUILD DE PRODUCCIÓN (Vite)
+# Se genera con: npm run build
+# No debe versionarse — se despliega directamente desde el servidor de CI/CD.
+# ─────────────────────────────────────────────────────────────────────────────
+dist/
+dist-ssr/
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# CACHÉ DE VITE
+# Vite guarda módulos pre-procesados aquí para acelerar el servidor de dev.
+# Es específico de cada máquina y se regenera automáticamente.
+# ─────────────────────────────────────────────────────────────────────────────
+.vite/
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ARCHIVOS LOCALES DE VITE
+# Los archivos *.local son convención de Vite para sobreescrituras personales
+# (por ejemplo: vite.config.local.js). No deben compartirse.
+# ─────────────────────────────────────────────────────────────────────────────
+*.local
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# LOGS
+# ─────────────────────────────────────────────────────────────────────────────
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -13,15 +57,13 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
 
-# Editor directories and files
+# ─────────────────────────────────────────────────────────────────────────────
+# EDITORES
+# ─────────────────────────────────────────────────────────────────────────────
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
 *.suo
 *.ntvs*

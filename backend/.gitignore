@@ -1,19 +1,46 @@
-# Dependencias
+# =============================================================================
+# .gitignore — Backend Node.js / Express
+# Las reglas globales del .gitignore raíz ya cubren node_modules, .env,
+# logs y archivos de SO. Este archivo añade patrones específicos del backend.
+# =============================================================================
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# DEPENDENCIAS (refuerzo local)
+# ─────────────────────────────────────────────────────────────────────────────
 node_modules/
 
-# Variables de entorno — NUNCA subir credenciales reales
+
+# ─────────────────────────────────────────────────────────────────────────────
+# VARIABLES DE ENTORNO
+# El archivo real (.env) tiene credenciales de Supabase y el JWT secret.
+# Solo se versiona .env.example con valores ficticios.
+# ─────────────────────────────────────────────────────────────────────────────
 .env
-.env.local
-.env.development
-.env.production
+.env.*
+!.env.example
 
-# Logs
-*.log
-npm-debug.log*
 
-# Cobertura de pruebas
+# ─────────────────────────────────────────────────────────────────────────────
+# COBERTURA DE PRUEBAS (Jest)
+# Se genera con: npm run test:coverage
+# ─────────────────────────────────────────────────────────────────────────────
 coverage/
+.nyc_output/
 
-# Sistema operativo
-.DS_Store
-Thumbs.db
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ARCHIVOS DE UPLOAD / ARCHIVOS TEMPORALES DEL SERVIDOR
+# Si en el futuro se implementa carga de archivos (imágenes de productos,
+# logotipos, etc.), la carpeta de uploads nunca debe versionarse.
+# ─────────────────────────────────────────────────────────────────────────────
+uploads/
+tmp/
+temp/
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# LOGS DEL SERVIDOR
+# ─────────────────────────────────────────────────────────────────────────────
+logs/
+*.log
