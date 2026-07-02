@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(fsutil reparsepoint query \"C:\\\\GenIA\\\\ProyectoPV\\\\backend\" 2>&1; echo \"---\"; \\(Get-Item \"C:\\\\GenIA\\\\ProyectoPV\\\\backend\"\\).LinkType; \\(Get-Item \"C:\\\\GenIA\\\\ProyectoPV\\\\backend\"\\).Target; echo \"---volumes---\"; \\(Get-Item \"C:\\\\GenIA\\\\ProyectoPV\"\\).PSDrive; \\(Get-Item \"C:\\\\proyectos\"\\).PSDrive)",
+      "Bash(powershell.exe -Command \"\\(Get-Item 'C:\\\\GenIA\\\\ProyectoPV\\\\backend\\\\src\\\\app.js'\\).LastWriteTime; \\(Get-Item 'C:\\\\proyectos\\\\punto-de-venta\\\\backend\\\\src\\\\app.js'\\).LastWriteTime\")",
+      "Bash(netstat -ano)",
+      "Bash(taskkill //PID 34928 //F)",
+      "Bash(taskkill //PID 3904 //F)",
+      "Bash(taskkill //PID 34840 //F)",
+      "Bash(taskkill //PID 25888 //F)",
+      "Bash(npm install *)",
+      "Bash(node -e ' *)",
+      "Bash(taskkill //PID 24316 //F)",
+      "Bash(taskkill //PID 9724 //F)",
+      "Bash(taskkill //PID 10368 //F)",
+      "Bash(npm create *)",
+      "Bash(npx tailwindcss *)",
+      "Bash(npx --yes tailwindcss init -p)",
+      "Bash(./node_modules/.bin/tailwindcss init *)",
+      "PowerShell(netstat -ano)",
+      "PowerShell(taskkill /PID 24148 /F)",
+      "PowerShell(taskkill /PID 10416 /F)",
+      "PowerShell(taskkill /PID 37068 /F)"
+    ]
+  }
+}
