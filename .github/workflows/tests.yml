@@ -1,0 +1,74 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# CI — Pruebas Jest del backend (Node.js + Babel)
+#
+# Se ejecuta automáticamente en cada push a main y en cada Pull Request
+# que apunte a main. Las pruebas corren desde el directorio backend/.
+# ──────────────────────────────────────────────────────────────────────────────
+
+name: Tests Backend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "backend/**"          # Solo corre si cambia algo en backend/
+      - ".github/workflows/tests.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "backend/**"
+      - ".github/workflows/tests.yml"
+
+jobs:
+  test:
+    name: Jest + Babel (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]   # Verifica compatibilidad en ambas versiones LTS
+
+    steps:
+      # 1. Descarga el código del repositorio
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      # 2. Configura la versión de Node.js indicada por la matriz
+      - name: Configurar Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: backend/package-lock.json   # Cachea node_modules entre runs
+
+      # 3. Instala dependencias de producción Y desarrollo (babel-jest, jest, etc.)
+      - name: Instalar dependencias
+        working-directory: backend
+        run: npm install
+
+      # 4. Ejecuta la suite de pruebas Jest
+      #    Las variables de entorno ficticias evitan que el código de inicialización
+      #    de Supabase falle al importar (jest.mock lo reemplaza de todas formas).
+      - name: Correr pruebas
+        working-directory: backend
+        env:
+          NODE_ENV: test
+          SUPABASE_URL: https://placeholder.supabase.co
+          SUPABASE_ANON_KEY: placeholder-key-for-ci
+        run: npm test
+
+      # 5. (Opcional) Genera reporte de cobertura y lo sube como artefacto
+      - name: Generar reporte de cobertura
+        working-directory: backend
+        env:
+          NODE_ENV: test
+          SUPABASE_URL: https://placeholder.supabase.co
+          SUPABASE_ANON_KEY: placeholder-key-for-ci
+        run: npm run test:coverage
+
+      - name: Subir reporte de cobertura
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-node-${{ matrix.node-version }}
+          path: backend/coverage/
+          retention-days: 7          # El reporte se conserva 7 días en GitHub
