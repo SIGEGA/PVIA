@@ -60,7 +60,7 @@ const validateStock = async (items) => {
       err.status = 404;
       throw err;
     }
-    if (parseFloat(product.stock_actual) < parseFloat(item.cantidad)) {
+    if (parseFloat(product.stock_actual) > parseFloat(item.cantidad)) {
       const err = new Error(
         `Stock insuficiente para "${product.nombre}". Disponible: ${product.stock_actual}`
       );
