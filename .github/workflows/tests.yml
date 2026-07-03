@@ -41,10 +41,10 @@ jobs:
           cache: "npm"
           cache-dependency-path: backend/package-lock.json   # Cachea node_modules entre runs
 
-      # 3. Instala dependencias de producción Y desarrollo (babel-jest, jest, etc.)
+      # 3. Instala dependencias usando el package-lock.json exacto (no resuelve versiones nuevas)
       - name: Instalar dependencias
         working-directory: backend
-        run: npm install
+        run: npm ci
 
       # 4. Ejecuta la suite de pruebas Jest
       #    Las variables de entorno ficticias evitan que el código de inicialización

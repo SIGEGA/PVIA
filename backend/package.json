@@ -20,8 +20,8 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^8.0.1",
-    "@babel/preset-env": "^8.0.2",
+    "@babel/core": "^7.27.0",
+    "@babel/preset-env": "^7.27.0",
     "babel-jest": "^30.4.1",
     "jest": "^30.4.2",
     "nodemon": "^3.1.4"
